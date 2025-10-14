@@ -1,0 +1,19 @@
+{
+  "stream": "v1.mini.s",
+  "selector": "SOL_USDT_Perp@500",
+  "sequence_number": "0",
+  "feed": {
+    "event_time": "1759251805926993583",
+    "instrument": "SOL_USDT_Perp",
+    "mark_price": "205.149838616",
+    "index_price": "205.223638326",
+    "last_price": "205.24",
+    "last_size": "28.3",
+    "mid_price": "205.275",
+    "best_bid_price": "205.26",
+    "best_bid_size": "181.5",
+    "best_ask_price": "205.29",
+    "best_ask_size": "292.2"
+  },
+  "prev_sequence_number": "0"
+}

@@ -1,0 +1,108 @@
+// position response
+{
+  "account": 1,
+  "channel": "account_all:1",
+  "daily_trades_count": 51,
+  "daily_volume": 1416.122851,
+  "funding_histories": {},
+  "monthly_trades_count": 58,
+  "monthly_volume": 1921.955541,
+  "positions": {
+    "0": {
+      "market_id": 0,
+      "symbol": "ETH",
+      "initial_margin_fraction": "50.00",
+      "open_order_count": 0,
+      "pending_order_count": 0,
+      "position_tied_order_count": 0,
+      "sign": 1,
+      "position": "0.0000",
+      "avg_entry_price": "0.00",
+      "position_value": "-0.000000",
+      "unrealized_pnl": "0.000000",
+      "realized_pnl": "0.000000",
+      "liquidation_price": "",
+      "margin_mode": 0,
+      "allocated_margin": "0.000000"
+    },
+    "1": {
+      "market_id": 1,
+      "symbol": "BTC",
+      "initial_margin_fraction": "100.00",
+      "open_order_count": 0,
+      "pending_order_count": 0,
+      "position_tied_order_count": 0,
+      "sign": 1,
+      "position": "0.00000",
+      "avg_entry_price": "0.0",
+      "position_value": "-0.000000",
+      "unrealized_pnl": "0.000000",
+      "realized_pnl": "0.000000",
+      "liquidation_price": "",
+      "margin_mode": 0,
+      "allocated_margin": "0.000000"
+    },
+    "2": {
+      "market_id": 2,
+      "symbol": "SOL",
+      "initial_margin_fraction": "50.00",
+      "open_order_count": 0,
+      "pending_order_count": 0,
+      "position_tied_order_count": 0,
+      "sign": 1,
+      "position": "0.200",
+      "avg_entry_price": "230.330",
+      "position_value": "46.043800",
+      "unrealized_pnl": "-0.022150",
+      "realized_pnl": "0.000000",
+      "liquidation_price": "",
+      "margin_mode": 0,
+      "allocated_margin": "0.000000"
+    }
+  },
+  "shares": [],
+  "total_trades_count": 58,
+  "total_volume": 1921.955541,
+  "trades": {},
+  "type": "subscribed/account_all",
+  "weekly_trades_count": 58,
+  "weekly_volume": 1921.955541
+}
+
+// trade response
+{
+  "account": 1,
+  "channel": "account_all:1",
+  "funding_histories": {},
+  "positions": {},
+  "shares": [],
+  "trades": {
+    "2": [
+      {
+        "trade_id": 183097998,
+        "tx_hash": "8f4507beb5e28a313fb13a1071d67abd41b1b9920b308126f157f60e5cec089119879bc965cd4b6e",
+        "type": "trade",
+        "market_id": 2,
+        "size": "0.397",
+        "price": "224.991",
+        "usd_amount": "89.321427",
+        "ask_id": 844425074117803,
+        "bid_id": 1125899758505207,
+        "ask_account_id": 179227,
+        "bid_account_id": 7684,
+        "is_maker_ask": false,
+        "block_height": 57586016,
+        "timestamp": 1759593339084,
+        "taker_position_size_before": "0.397",
+        "taker_entry_quote_before": "89.540571",
+        "taker_initial_margin_fraction_before": 5000,
+        "taker_position_sign_changed": true,
+        "maker_fee": 20,
+        "maker_position_size_before": "39.457",
+        "maker_entry_quote_before": "8893.061513",
+        "maker_initial_margin_fraction_before": 666
+      }
+    ]
+  },
+  "type": "update/account_all"
+}

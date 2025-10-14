@@ -1,0 +1,22 @@
+{
+    "stream": "v1.position",
+    "selector": "BTC_USDT_Perp",
+    "sequence_number": "872634876",
+    "feed": {
+        "event_time": "1697788800000000000",
+        "sub_account_id": "'$GRVT_SUB_ACCOUNT_ID'",
+        "instrument": "BTC_USDT_Perp",
+        "size": "2635000.50",
+        "notional": "2635000.50",
+        "entry_price": "65038.01",
+        "exit_price": "65038.01",
+        "mark_price": "65038.01",
+        "unrealized_pnl": "135000.50",
+        "realized_pnl": "-35000.30",
+        "total_pnl": "100000.20",
+        "roi": "10.20",
+        "quote_index_price": "1.0000102",
+        "est_liquidation_price": 60000.25,
+        "leverage": "10"
+    }
+}

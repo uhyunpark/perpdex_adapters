@@ -1,0 +1,79 @@
+[v1.order]
+Subscribes to a feed of order updates pertaining to orders made by your account.
+Each Order can be uniquely identified by its order_id or client_order_id.
+To subscribe to all orders, specify an empty instrument (eg. 2345123).
+Otherwise, specify the instrument to only receive orders for that instrument (eg. 2345123-BTC_USDT_Perp).
+
+example response: {
+    "stream": "v1.order",
+    "selector": "BTC_USDT_Perp",
+    "sequence_number": "872634876",
+    "feed": {
+        "order_id": "0x1234567890abcdef",
+        "sub_account_id": "'$GRVT_SUB_ACCOUNT_ID'",
+        "is_market": false,
+        "time_in_force": "GOOD_TILL_TIME",
+        "post_only": false,
+        "reduce_only": false,
+        "legs": [{
+            "instrument": "BTC_USDT_Perp",
+            "size": "10.5",
+            "limit_price": "65038.01",
+            "is_buying_asset": true
+        }],
+        "signature": {
+            "signer": "0xc73c0c2538fd9b833d20933ccc88fdaa74fcb0d0",
+            "r": "0xb788d96fee91c7cdc35918e0441b756d4000ec1d07d900c73347d9abbc20acc8",
+            "s": "0x3d786193125f7c29c958647da64d0e2875ece2c3f845a591bdd7dae8c475e26d",
+            "v": 28,
+            "expiration": "1697788800000000000",
+            "nonce": 1234567890
+        },
+        "metadata": {
+            "client_order_id": "23042",
+            "create_time": "1697788800000000000",
+            "trigger": {
+                "trigger_type": "TAKE_PROFIT",
+                "tpsl": {
+                    "trigger_by": "LAST",
+                    "trigger_price": "65038.10",
+                    "close_position": false
+                }
+            },
+            "broker": "BROKER_CODE"
+        },
+        "state": {
+            "status": "PENDING",
+            "reject_reason": "CLIENT_CANCEL",
+            "book_size": ["10.5"],
+            "traded_size": ["1.5"],
+            "update_time": "1697788800000000000",
+            "avg_fill_price": ["60000.4"]
+        }
+    }
+}
+
+[v1.state]
+Subscribes to a feed of order updates pertaining to orders made by your account.
+Unlike the Order Stream, this only streams state updates, drastically improving throughput, and latency.
+Each Order can be uniquely identified by its order_id or client_order_id.
+To subscribe to all orders, specify an empty instrument (eg. 2345123).
+Otherwise, specify the instrument to only receive orders for that instrument (eg. 2345123-BTC_USDT_Perp).
+
+example response: {
+    "stream": "v1.state",
+    "selector": "BTC_USDT_Perp",
+    "sequence_number": "872634876",
+    "feed": {
+        "order_id": "10000101000203040506",
+        "client_order_id": "23042",
+        "order_state": {
+            "status": "PENDING",
+            "reject_reason": "CLIENT_CANCEL",
+            "book_size": ["10.5"],
+            "traded_size": ["1.5"],
+            "update_time": "1697788800000000000",
+            "avg_fill_price": ["60000.4"]
+        }
+    }
+}

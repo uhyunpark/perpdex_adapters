@@ -1,0 +1,28 @@
+{
+    "stream": "v1.fill",
+    "selector": "BTC_USDT_Perp",
+    "sequence_number": "872634876",
+    "feed": {
+        "event_time": "1697788800000000000",
+        "sub_account_id": "'$GRVT_SUB_ACCOUNT_ID'",
+        "instrument": "BTC_USDT_Perp",
+        "is_buyer": true,
+        "is_taker": true,
+        "size": "0.30",
+        "price": "65038.01",
+        "mark_price": "65038.01",
+        "index_price": "65038.01",
+        "interest_rate": 0.0003,
+        "forward_price": "65038.01",
+        "realized_pnl": "2400.50",
+        "fee": "9.75",
+        "fee_rate": 0.0003,
+        "trade_id": "209358-2",
+        "order_id": "0x10000101000203040506",
+        "venue": "ORDERBOOK",
+        "client_order_id": "23042",
+        "signer": "0xc73c0c2538fd9b833d20933ccc88fdaa74fcb0d0",
+        "broker": "UNSPECIFIED",
+        "is_rpi": false
+    }
+}

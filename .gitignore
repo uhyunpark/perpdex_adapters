@@ -1,0 +1,8 @@
+.env
+.venv
+.mcp.json
+logs
+CLAUDE.md
+.claude
+strategy
+__pycache__
