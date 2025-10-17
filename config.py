@@ -31,5 +31,10 @@ class AppConfig(BaseModel):
     pacifica_api_key: str = os.getenv("PACIFICA_API_KEY", "")
     pacifica_api_secret: str = os.getenv("PACIFICA_API_PRIVATE_KEY", "")
 
+    # Hyperliquid
+    hyperliquid_private_key: str = os.getenv("HL_API_PRIVATE_KEY", "")
+    hyperliquid_account_address: str = os.getenv("HL_API_WALLET_ADDRESS", "")
+    hyperliquid_env: str = os.getenv("HL_ENV", "mainnet")
+
 
 CFG = AppConfig()
