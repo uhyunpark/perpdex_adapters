@@ -1,6 +1,7 @@
 """
 Pacifica Adapter - WebSocket-based trading adapter
 Handles connection, BBO subscriptions, order execution, and position tracking
+Current fee structure - maker fee 0.015%, taker fee 0.04%
 """
 import asyncio
 import json
@@ -217,6 +218,17 @@ class PacificaAdapter:
             await self.ws.send(json.dumps(account_positions_msg))
             logger.info(f"[PACIFICA] Subscribed to account positions for {self.public_key}")
 
+            # Subscribe to account orders (for fill detection)
+            account_orders_msg = {
+                "method": "subscribe",
+                "params": {
+                    "source": "account_orders",
+                    "account": self.public_key
+                }
+            }
+            await self.ws.send(json.dumps(account_orders_msg))
+            logger.info(f"[PACIFICA] Subscribed to account orders for {self.public_key}")
+
         except Exception as e:
             logger.error(f"[PACIFICA] Failed to subscribe to streams: {e}")
 
@@ -238,8 +250,12 @@ class PacificaAdapter:
                     # Position update
                     await self._handle_position_update(data.get("data", []))
 
-                elif "result" in data or "error" in data:
-                    # Subscription confirmation or error response
+                elif channel == "account_orders":
+                    # Order updates (for fill detection)
+                    await self._handle_order_updates(data.get("data", []))
+
+                elif "code" in data:
+                    # Response to order placement/cancellation
                     logger.debug(f"[PACIFICA] Response: {data}")
 
             except websockets.exceptions.ConnectionClosed:
@@ -285,41 +301,49 @@ class PacificaAdapter:
         except Exception as e:
             logger.error(f"[PACIFICA] Error handling orderbook: {e}")
 
-    async def _handle_fill_update(self, data: dict):
-        """Handle fill update"""
+    async def _handle_order_updates(self, data: list):
+        """Handle order updates (for fill detection)
+
+        Format: [{I: cloid, i: order_id, oe: event, os: status, f: filled, p: price, ...}, ...]
+        """
         try:
-            # Parse fill data
-            side_str = data.get("side", "").lower()
-            side = Side.BID if side_str == "bid" or side_str == "buy" else Side.ASK
+            for order in data:
+                order_event = order.get("oe", "")
+                order_status = order.get("os", "")
 
-            px = float(data.get("price", 0))
-            qty = float(data.get("amount", 0))
-            fee = float(data.get("fee", 0))
-            order_id = str(data.get("order_id", ""))
-            client_order_id = data.get("client_order_id", "")
+                # Detect fills: order event is fulfill_market or fulfill_limit
+                if order_event in ["fulfill_market", "fulfill_limit"] or order_status in ["partially_filled", "filled"]:
+                    side_str = order.get("d", "")
+                    side = Side.BID if side_str == "bid" else Side.ASK
 
-            fill = Fill(
-                side=side,
-                px=px,
-                qty=qty,
-                ts_ms=int(data.get("timestamp", now_ms())),
-                order_id=order_id,
-                client_order_id=client_order_id,
-                fee=fee
-            )
+                    filled_amt = float(order.get("f", 0))
+                    avg_price = float(order.get("p", 0))
+                    order_id = str(order.get("i", ""))
+                    client_order_id = order.get("I", "")
 
-            logger.info(
-                f"[PACIFICA] Fill detected: {fill.side} {fill.qty}@{fill.px} | "
-                f"oid={order_id} | Fee=${fee:.4f}"
-            )
+                    if filled_amt > 0 and avg_price > 0:
+                        fill = Fill(
+                            side=side,
+                            px=avg_price,
+                            qty=filled_amt,
+                            ts_ms=int(order.get("t", now_ms())),
+                            order_id=order_id,
+                            client_order_id=client_order_id or "",
+                            fee=0.0  # Not provided in this stream
+                        )
 
-            try:
-                self._fill_queue.put_nowait(fill)
-            except asyncio.QueueFull:
-                pass
+                        logger.info(
+                            f"[PACIFICA] Fill detected: {fill.side} {fill.qty}@{fill.px} | "
+                            f"oid={order_id} event={order_event}"
+                        )
+
+                        try:
+                            self._fill_queue.put_nowait(fill)
+                        except asyncio.QueueFull:
+                            pass
 
         except Exception as e:
-            logger.error(f"[PACIFICA] Error handling fill: {e}")
+            logger.error(f"[PACIFICA] Error handling order updates: {e}")
 
     async def _handle_position_update(self, data: list):
         """Handle position update

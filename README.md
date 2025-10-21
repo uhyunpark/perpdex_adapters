@@ -1,6 +1,6 @@
 # Perpdex Adapters
 
-Unified exchange adapters and market making strategy system for perpetual futures. You can build your own strategy with adapters.
+Unified exchange adapter for perpetual future DEXs. Build your own strategy with adapters.
 
 ## 📋 Table of Contents
 
@@ -9,7 +9,6 @@ Unified exchange adapters and market making strategy system for perpetual future
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Project Structure](#project-structure)
-- [Examples](#examples)
 - [Testing](#testing)
 - [Development](#development)
 
@@ -24,7 +23,7 @@ Currently supports GRVT and Lighter, and more to come
 |----------|----------|-----------|
 | **GRVT**  | ✅ | ✅ | 
 | **Lighter** | ✅ | ✅ | 
-| **Pacifica** | 🚧 | 🚧 | 
+| **Pacifica** | 🚧 | ✅  | 
 | **Hyperliquid**  | 🚧 | 🚧 | 
 
 ## Installation
@@ -37,6 +36,8 @@ Currently supports GRVT and Lighter, and more to come
 ### Install Dependencies
 
 ```bash
+# activate venv
+source .venv/bin/activate
 # Install dependencies
 pip install -r requirements.txt
 ```
@@ -70,6 +71,11 @@ LIGHTER_PRIVATE_KEY=your_private_key
 LIGHTER_ACCOUNT_INDEX=0
 LIGHTER_API_KEY_INDEX=2
 LIGHTER_ENV=mainnet
+
+# Pacifica configuration
+PACIFICA_API_KEY=
+PACIFICA_API_PRIVATE_KEY=
+PACIFICA_API_ENV=mainnet
 ```
 
 ### Lighter Initial Setup
@@ -89,6 +95,7 @@ perpdex_adapters/
 ├── adapters/           # Exchange adapters
 │   ├── grvt.py        # GRVT adapter
 │   └── lighter.py     # Lighter adapter
+│   └── pacifica.py    # Pacifica adapter
 ├── common/            # Common utilities
 │   ├── types.py       # Data type definitions
 │   └── utils.py       # Helper functions
@@ -97,32 +104,6 @@ perpdex_adapters/
 └── requirements.txt  # Dependencies
 ```
 
-## Examples
-
-### GRVT Examples
-
-```bash
-# BBO stream
-# venv
-python -m test.test_grvt
-
-# Place order
-# venv
-python -m test.test_place_grvt_order
-```
-
-### Lighter Examples
-
-```bash
-# Get account info
-python -m platform_provided_exampled.lighter.get_info
-
-# Create market order
-python -m platform_provided_exampled.lighter.create_market_order
-
-# WebSocket stream
-python -m platform_provided_exampled.lighter.ws_async
-```
 
 ## Testing
 
@@ -134,6 +115,9 @@ python -m test.test_grvt
 
 # Test Lighter
 python -m test.test_lighter
+
+# Test Pacifica
+python -m test.test_pacifica
 ```
 
 ## Contact
